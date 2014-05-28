@@ -56,7 +56,7 @@ String inputString; // input from Serial
 // Global objects                                                  //
 // =============================================================== //
 //DHT dht(pinSensor, DHT22); // set up object for DHT22 temperature sensor
-//LiquidCrystal lcd(lcdRS, lcdEnable, lcdD4, lcdD5, lcdD6, lcdD7); // initialize the LCD display
+LiquidCrystal lcd(lcdRS, lcdEnable, lcdD4, lcdD5, lcdD6, lcdD7); // initialize the LCD display
 
 // =============================================================== //
 // Helper functions                                                //
@@ -216,7 +216,7 @@ float averageReadings(){
     //get temperature reading and humidity reading
     float readingTemp = SHT2x.GetTemperature();
 //    float readingTemp = dht.readTemperature(true); //get temperature reading - true indicates degrees fahrenheight
-    float readingHumidity = SHT2x.GetHumidity()
+    float readingHumidity = SHT2x.GetHumidity();
 //    float readingHumidity = dht.readHumidity(); //get humidity reading
 
     // check if either temperature or humidity reading is NAN
