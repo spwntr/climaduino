@@ -1,12 +1,13 @@
 // Combined code from:
-// http://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor
+// https://github.com/misenso/SHT2x-Arduino-Library
 // Arduino Projects book p. 119-121, and others
 // Lots of Googling :-)
 // http://www.engblaze.com/microcontroller-tutorial-avr-and-arduino-timer-interrupts/
 // http://www.milesburton.com/?title=Dallas_Temperature_Control_Library
-#include <DHT.h>
+#include <SHT2x.h>
 #include <LiquidCrystal.h>
 #include <EEPROM.h>
+#include <Wire.h>
 
 // =============================================================== //
 // statically defined variables - these can not be changed later   //
@@ -54,8 +55,8 @@ String inputString; // input from Serial
 // =============================================================== //
 // Global objects                                                  //
 // =============================================================== //
-DHT dht(pinSensor, DHT22); // set up object for DHT22 temperature sensor
-LiquidCrystal lcd(lcdRS, lcdEnable, lcdD4, lcdD5, lcdD6, lcdD7); // initialize the LCD display
+//DHT dht(pinSensor, DHT22); // set up object for DHT22 temperature sensor
+//LiquidCrystal lcd(lcdRS, lcdEnable, lcdD4, lcdD5, lcdD6, lcdD7); // initialize the LCD display
 
 // =============================================================== //
 // Helper functions                                                //
@@ -213,8 +214,10 @@ float averageReadings(){
     // since index starts at 0, but
     // number of readings starts at 1
     //get temperature reading and humidity reading
-    float readingTemp = dht.readTemperature(true); //get temperature reading - true indicates degrees fahrenheight
-    float readingHumidity = dht.readHumidity(); //get humidity reading
+    float readingTemp = SHT2x.GetTemperature();
+//    float readingTemp = dht.readTemperature(true); //get temperature reading - true indicates degrees fahrenheight
+    float readingHumidity = SHT2x.GetHumidity()
+//    float readingHumidity = dht.readHumidity(); //get humidity reading
 
     // check if either temperature or humidity reading is NAN
     // if that is the case, it indicates a failure reading, so we will break out of the loop
@@ -354,7 +357,7 @@ void setup()
   readEEPROMValues();
   Serial.begin(9600);  //Start the Serial connection with the computer
   //to view the result open the Serial monitor
-  dht.begin(); //start up DHT library;
+//  dht.begin(); //start up DHT library;
   pinMode(pinCooler,INPUT);            // default mode is INPUT - to lower tempSetPointF
   pinMode(pinWarmer,INPUT);            // default mode is INPUT - to raise tempSetPointF
   digitalWrite(pinCooler, HIGH);     // Turn on the internal pull-up resistor
